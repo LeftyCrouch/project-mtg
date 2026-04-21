@@ -36,3 +36,4 @@ include(":androidApp")
 include(":shared:app")
 // shared libraries
 include(":shared:core:model")
+include(":shared:core:logger")

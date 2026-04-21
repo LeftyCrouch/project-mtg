@@ -1,0 +1,9 @@
+package com.crouch.projectmtg.shared.core.logger
+
+expect object Logger {
+    fun verbose(tag: String, message: () -> String)
+    fun debug(tag: String, message: () -> String)
+    fun info(tag: String, message: () -> String)
+    fun warn(tag: String, message: () -> String)
+    fun error(tag: String, throwable: Throwable? = null, message: () -> String)
+}
