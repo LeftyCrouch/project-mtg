@@ -18,11 +18,9 @@ object LogIt {
         message: () -> String
     ) {
         if (showLog(LogLevel.VERBOSE)) {
-            Logger.verbose(tag, message)
-            handleCallbacks(
-                tag = tag,
-                message = message
-            )
+            val invokedMessage = message.invoke()
+            Logger.verbose(tag, invokedMessage)
+            handleCallbacks(tag, invokedMessage)
         }
     }
 
@@ -31,11 +29,9 @@ object LogIt {
         message: () -> String
     ) {
         if (showLog(LogLevel.DEBUG)) {
-            Logger.debug(tag, message)
-            handleCallbacks(
-                tag = tag,
-                message = message
-            )
+            val invokedMessage = message.invoke()
+            Logger.debug(tag, invokedMessage)
+            handleCallbacks(tag, invokedMessage)
         }
     }
 
@@ -44,11 +40,9 @@ object LogIt {
         message: () -> String
     ) {
         if (showLog(LogLevel.INFO)) {
-            Logger.info(tag, message)
-            handleCallbacks(
-                tag = tag,
-                message = message
-            )
+            val invokedMessage = message.invoke()
+            Logger.info(tag, invokedMessage)
+            handleCallbacks(tag, invokedMessage)
         }
     }
 
@@ -57,11 +51,9 @@ object LogIt {
         message: () -> String
     ) {
         if (showLog(LogLevel.WARN)) {
-            Logger.warn(tag, message)
-            handleCallbacks(
-                tag = tag,
-                message = message
-            )
+            val invokedMessage = message.invoke()
+            Logger.warn(tag, invokedMessage)
+            handleCallbacks(tag, invokedMessage)
         }
     }
 
@@ -71,18 +63,19 @@ object LogIt {
         message: () -> String
     ) {
         if (showLog(LogLevel.ERROR)) {
-            Logger.error(tag, throwable, message)
-            handleCallbacks(tag, throwable, message)
+            val invokedMessage = message.invoke()
+            Logger.error(tag, invokedMessage, throwable)
+            handleCallbacks(tag, invokedMessage, throwable)
         }
     }
 
     private fun handleCallbacks(
         tag: String = message::class.simpleName ?: "",
-        throwable: Throwable? = null,
-        message: () -> String
+        message: String,
+        throwable: Throwable? = null
     ) {
         callbacks.forEach { callback ->
-            callback.invoke(tag, message.invoke(), throwable)
+            callback.invoke(tag, message, throwable)
         }
     }
 

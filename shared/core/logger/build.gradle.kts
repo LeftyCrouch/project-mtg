@@ -10,6 +10,11 @@ kotlin {
             version = release(libs.versions.android.compileSdk.get().toInt())
         }
         minSdk = libs.versions.android.minSdk.get().toInt()
+
+        withHostTest {
+            isReturnDefaultValues = true
+            enableCoverage = true
+        }
     }
 
     listOf(
@@ -19,6 +24,14 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "shared:core:logger"
             isStatic = true
+        }
+    }
+
+    sourceSets {
+        val androidHostTest by getting {
+            dependencies {
+                implementation(libs.kotlin.test)
+            }
         }
     }
 
