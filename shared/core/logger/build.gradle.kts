@@ -28,10 +28,8 @@ kotlin {
     }
 
     sourceSets {
-        val androidHostTest by getting {
-            dependencies {
-                implementation(libs.kotlin.test)
-            }
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
         }
     }
 
