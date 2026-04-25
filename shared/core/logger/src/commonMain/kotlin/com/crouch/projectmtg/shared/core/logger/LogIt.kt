@@ -79,11 +79,10 @@ object LogIt {
         }
     }
 
-    private fun formatTag(tag: String?): String {
-        return tag?.let {
+    private fun formatTag(tag: String?): String =
+        tag?.let {
             it.split("$").firstOrNull() ?: ""
         } ?: ""
-    }
 
     private fun showLog(logLevel: LogLevel) = logLevel.ordinal >= this.logLevel.ordinal
 }

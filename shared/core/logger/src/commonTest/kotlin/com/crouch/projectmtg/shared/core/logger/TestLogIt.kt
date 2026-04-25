@@ -5,7 +5,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class TestLogIt {
-
     @BeforeTest
     fun beforeTests() {
         LogIt.logLevel = LogLevel.INFO

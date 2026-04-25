@@ -1,20 +1,32 @@
 package com.crouch.projectmtg.shared.core.logger
 
 actual object Logger {
-    actual fun verbose(tag: String, message: String) {
-        //TODO
+    actual fun verbose(
+        tag: String,
+        message: String
+    ) {
+        // TODO
     }
 
-    actual fun debug(tag: String, message: String) {
-        //TODO
+    actual fun debug(
+        tag: String,
+        message: String
+    ) {
+        // TODO
     }
 
-    actual fun info(tag: String, message: String) {
-        //TODO
+    actual fun info(
+        tag: String,
+        message: String
+    ) {
+        // TODO
     }
 
-    actual fun warn(tag: String, message: String) {
-        //TODO
+    actual fun warn(
+        tag: String,
+        message: String
+    ) {
+        // TODO
     }
 
     actual fun error(
@@ -22,6 +34,6 @@ actual object Logger {
         message: String,
         throwable: Throwable?
     ) {
-        //TODO
+        // TODO
     }
 }

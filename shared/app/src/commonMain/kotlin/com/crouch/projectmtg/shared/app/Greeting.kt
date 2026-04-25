@@ -6,7 +6,5 @@ class Greeting {
     private val platform = getPlatform()
     private val card = Card("Magic")
 
-    fun greet(): String {
-        return "Hello, ${platform.name}!, Get ready for some ${card.name}"
-    }
+    fun greet(): String = "Hello, ${platform.name}!, Get ready for some ${card.name}"
 }
