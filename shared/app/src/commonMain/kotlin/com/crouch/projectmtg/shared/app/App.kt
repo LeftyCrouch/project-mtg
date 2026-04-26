@@ -18,13 +18,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.crouch.projectmtg.shared.core.ui.theme.AppTheme
 import org.jetbrains.compose.resources.painterResource
 import projectmtg.shared.app.generated.resources.Res
 import projectmtg.shared.app.generated.resources.compose_multiplatform
 
 @Composable
 fun App() {
-    MaterialTheme {
+    AppTheme {
         var showContent by remember { mutableStateOf(false) }
         Column(
             modifier = Modifier
@@ -43,7 +44,10 @@ fun App() {
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
+                    Text(
+                        style = MaterialTheme.typography.displayLarge,
+                        text = "Compose: $greeting"
+                    )
                 }
             }
         }
