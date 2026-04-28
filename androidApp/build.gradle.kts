@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.koin)
 }
 
 android {
@@ -17,6 +18,7 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -34,5 +36,8 @@ android {
 
 dependencies {
     implementation(libs.androidx.activity.compose)
+    // koin
+    implementation(libs.koin.android)
+    // local modules
     implementation(projects.shared.app)
 }

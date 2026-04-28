@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.androidKotlinMultiplatformLibrary)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.jetbrains.kotlin.serialization)
+    alias(libs.plugins.koin)
 }
 
 kotlin {
@@ -29,14 +31,28 @@ kotlin {
             implementation(libs.compose.uiTooling)
         }
         commonMain.dependencies {
+            // Compose
             implementation(libs.compose.runtime)
             implementation(libs.compose.foundation)
             implementation(libs.compose.material3)
+            implementation(libs.compose.icons)
             implementation(libs.compose.ui)
             implementation(libs.compose.components.resources)
             implementation(libs.compose.uiToolingPreview)
+            // koin
+            implementation(libs.koin.core)
+            implementation(libs.koin.annotations)
+            implementation(libs.koin.compose.viewmodel)
+            // Navigation 3
+            implementation(libs.jetbrains.navigation3.ui)
+            implementation(libs.jetbrains.lifecycle.viewmodelNavigation3)
+            implementation(libs.jetbrains.material3.adaptiveNavigation3)
+            // Serialization
+            implementation(libs.kotlinx.serialization.json)
+            // local modules
             implementation(projects.shared.core.model)
             implementation(projects.shared.core.ui)
+            implementation(projects.shared.core.logger)
         }
     }
 }
