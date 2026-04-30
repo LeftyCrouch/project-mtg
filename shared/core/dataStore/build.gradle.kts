@@ -9,17 +9,9 @@ kotlin {
     android {
         namespace = "com.crouch.projectmtg.shared.core.dataStore"
         compileSdk {
-            version =
-                release(
-                    libs.versions.android.compileSdk
-                        .get()
-                        .toInt()
-                )
+            version = release(libs.versions.android.compileSdk.get().toInt())
         }
-        minSdk =
-            libs.versions.android.minSdk
-                .get()
-                .toInt()
+        minSdk = libs.versions.android.minSdk.get().toInt()
     }
 
     listOf(

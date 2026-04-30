@@ -24,26 +24,44 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.crouch.projectmtg.shared.app.feature.settings.SettingsScreen
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation3.runtime.rememberNavBackStack
+import com.crouch.projectmtg.shared.app.feature.decks.DecksRoute
+import com.crouch.projectmtg.shared.app.feature.discover.DiscoverRoute
+import com.crouch.projectmtg.shared.app.feature.settings.SettingsRoute
 import com.crouch.projectmtg.shared.core.ui.theme.AppTheme
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
+import org.koin.compose.viewmodel.koinViewModel
 import projectmtg.shared.app.generated.resources.Res
+import projectmtg.shared.app.generated.resources.create_new_deck
 import projectmtg.shared.app.generated.resources.deck
+import projectmtg.shared.app.generated.resources.decks
 import projectmtg.shared.app.generated.resources.discover
+import projectmtg.shared.app.generated.resources.import_from_moxfield
+import projectmtg.shared.app.generated.resources.settings
 import projectmtg.shared.app.generated.resources.tap
 
 @Composable
 fun App() {
-    AppTheme {
+    val backStack = rememberNavBackStack(config, DecksRoute)
+    val viewModel: MainViewModel = koinViewModel()
+    val theme by viewModel.theme.collectAsStateWithLifecycle()
+
+    AppTheme(
+        theme = theme
+    ) {
         Scaffold(
             bottomBar = {
                 NavigationBar {
                     NavigationBarItem(
-                        selected = true,
-                        onClick = {},
+                        selected = backStack.lastOrNull() == DecksRoute,
+                        onClick = {
+                            backStack.removeAll { it == DecksRoute }
+                            backStack.add(DecksRoute) },
                         label = {
                             Text(
-                                text = "Decks"
+                                text = stringResource(Res.string.decks)
                             )
                         },
                         icon = {
@@ -55,11 +73,13 @@ fun App() {
                         }
                     )
                     NavigationBarItem(
-                        selected = false,
-                        onClick = {},
+                        selected = backStack.lastOrNull() == DiscoverRoute,
+                        onClick = {
+                            backStack.removeAll { it == DiscoverRoute }
+                            backStack.add(DiscoverRoute) },
                         label = {
                             Text(
-                                text = "Discover"
+                                text = stringResource(Res.string.discover)
                             )
                         },
                         icon = {
@@ -71,11 +91,13 @@ fun App() {
                         }
                     )
                     NavigationBarItem(
-                        selected = false,
-                        onClick = {},
+                        selected = backStack.lastOrNull() == SettingsRoute,
+                        onClick = {
+                            backStack.removeAll { it == SettingsRoute }
+                            backStack.add(SettingsRoute) },
                         label = {
                             Text(
-                                text = "Settings"
+                                text = stringResource(Res.string.settings)
                             )
                         },
                         icon = {
@@ -89,65 +111,72 @@ fun App() {
                 }
             },
             floatingActionButton = {
-                var showContent by remember { mutableStateOf(false) }
-                if (showContent) {
-                    Column(
-                        horizontalAlignment = Alignment.End,
-                        verticalArrangement = Arrangement.spacedBy(4.dp),
-                        modifier = Modifier.padding(4.dp)
-                    ) {
-                        ExtendedFloatingActionButton(
-                            onClick = { showContent = false }
+                if (backStack.lastOrNull() == DecksRoute) {
+                    var showContent by remember { mutableStateOf(false) }
+                    if (showContent) {
+                        Column(
+                            horizontalAlignment = Alignment.End,
+                            verticalArrangement = Arrangement.spacedBy(4.dp),
+                            modifier = Modifier.padding(4.dp)
                         ) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.Center
+                            ExtendedFloatingActionButton(
+                                onClick = { showContent = false }
                             ) {
-                                Icon(
-                                    modifier = Modifier.size(24.dp),
-                                    painter = painterResource(Res.drawable.tap),
-                                    tint = null,
-                                    contentDescription = null
-                                )
-                                Text(
-                                    text = ":create new deck"
-                                )
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.Center
+                                ) {
+                                    Icon(
+                                        modifier = Modifier.size(24.dp),
+                                        painter = painterResource(Res.drawable.tap),
+                                        tint = null,
+                                        contentDescription = null
+                                    )
+                                    Text(
+                                        modifier = Modifier.padding(start = 2.dp),
+                                        text = stringResource(Res.string.create_new_deck)
+                                    )
+                                }
+                            }
+                            ExtendedFloatingActionButton(
+                                onClick = { showContent = false }
+                            ) {
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.Center
+                                ) {
+                                    Icon(
+                                        modifier = Modifier.size(24.dp),
+                                        painter = painterResource(Res.drawable.tap),
+                                        tint = null,
+                                        contentDescription = null
+                                    )
+                                    Text(
+                                        modifier = Modifier.padding(start = 2.dp),
+                                        text = stringResource(Res.string.import_from_moxfield)
+                                    )
+                                }
                             }
                         }
-                        ExtendedFloatingActionButton(
-                            onClick = { showContent = false }
-                        ) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.Center
-                            ) {
-                                Icon(
-                                    modifier = Modifier.size(24.dp),
-                                    painter = painterResource(Res.drawable.tap),
-                                    tint = null,
-                                    contentDescription = null
-                                )
-                                Text(
-                                    text = ":Import from Moxfield"
-                                )
+                    } else {
+                        FloatingActionButton(
+                            onClick = {
+                                showContent = true
                             }
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Add,
+                                contentDescription = null
+                            )
                         }
-                    }
-                } else {
-                    FloatingActionButton(
-                        onClick = {
-                            showContent = true
-                        }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Add,
-                            contentDescription = null
-                        )
                     }
                 }
             }
-        ) {
-            SettingsScreen()
+        ) { paddingValues ->
+            AppNavHost(
+                backStack,
+                paddingValues
+            )
         }
     }
 }

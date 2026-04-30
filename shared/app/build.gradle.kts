@@ -53,6 +53,8 @@ kotlin {
             implementation(projects.shared.core.model)
             implementation(projects.shared.core.ui)
             implementation(projects.shared.core.logger)
+            implementation(projects.shared.core.data)
+            implementation(projects.shared.core.dataStore)
         }
     }
 }
